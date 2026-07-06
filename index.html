@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大美达州 · 巴人故里</title>
+    <style>
+        /* ========== 全局样式 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --red: #C41E3A;
+            --gold: #D4A017;
+            --dark: #1a1a2e;
+            --green: #2D5A27;
+            --cream: #FFF8F0;
+            --text: #333;
+            --text-light: #666;
+            --white: #fff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* ========== 导航栏 ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(20, 20, 30, 0.92);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            height: 60px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* ========== 主视觉 Hero ========== */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            background: linear-gradient(135deg, #0f0c29, #24243e, #302b63);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(212, 160, 23, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(196, 30, 58, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(45, 90, 39, 0.1) 0%, transparent 40%);
+        }
+
+        /* 山脉装饰 */
+        .mountains {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            z-index: 1;
+        }
+
+        .mountain {
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        .mountain-1 {
+            left: -5%;
+            border-width: 0 200px 280px;
+            border-color: transparent transparent rgba(30, 30, 50, 0.7);
+            animation: floatMountain 8s ease-in-out infinite;
+        }
+
+        .mountain-2 {
+            left: 20%;
+            border-width: 0 280px 350px;
+            border-color: transparent transparent rgba(40, 40, 60, 0.6);
+            animation: floatMountain 10s ease-in-out 1s infinite;
+        }
+
+        .mountain-3 {
+            left: 50%;
+            border-width: 0 240px 320px;
+            border-color: transparent transparent rgba(35, 35, 55, 0.65);
+            animation: floatMountain 9s ease-in-out 2s infinite;
+        }
+
+        .mountain-4 {
+            left: 70%;
+            border-width: 0 220px 300px;
+            border-color: transparent transparent rgba(38, 38, 58, 0.6);
+            animation: floatMountain 7s ease-in-out 0.5s infinite;
+        }
+
+        @keyframes floatMountain {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* 粒子效果 */
+        .particles {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--white);
+            padding: 20px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: var(--gold);
+            margin-bottom: 30px;
+            backdrop-filter: blur(5px);
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-title {
+            font-size: 80px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            background: linear-gradient(180deg, #fff 30%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+            text-shadow: none;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            letter-spacing: 6px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            line-height: 2;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 15px 50px;
+            background: linear-gradient(135deg, var(--red), #a01830);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 16px;
+            letter-spacing: 3px;
+            transition: all 0.4s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+            box-shadow: 0 8px 30px rgba(196, 30, 58, 0.4);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(196, 30, 58, 0.6);
+            background: linear-gradient(135deg, #d42a44, #c41e3a);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 24px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 14px;
+            position: relative;
+        }
+
+        .scroll-indicator span::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 2px;
+            animation: scrollDot 2s infinite;
+        }
+
+        @keyframes scrollDot {
+            0% {
+                top: 8px;
+                opacity: 1;
+            }
+            100% {
+                top: 22px;
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== 通用区块 ========== */
+        .section {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-line {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--red), var(--gold));
+            margin: 0 auto 20px;
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 15px;
+            letter-spacing: 2px;
+            margin-bottom: 60px;
+        }
+
+        /* ========== 关于达州 ========== */
+        .about {
+            background: var(--white);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .about-card {
+            text-align: center;
+            padding: 50px 30px;
+            border-radius: 20px;
+            background: var(--cream);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--red), var(--gold));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .about-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .about-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            color: var(--dark);
+        }
+
+        .about-card p {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* ========== 数字展示 ========== */
+        .stats {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: var(--white);
+            padding: 80px 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(180deg, #ffd700, #c41e3a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 8px;
+        }
+
+        /* ========== 景点 ========== */
+        .attractions {
+            background: var(--cream);
+        }
+
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .attraction-card {
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--white);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s ease;
+        }
+
+        .attraction-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .attraction-img {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .attraction-img::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+        }
+
+        .img-bashan {
+            background: linear-gradient(135deg, #2d5016, #4a7c2e);
+        }
+        .img-zhenfo {
+            background: linear-gradient(135deg, #d4a017, #b8860b);
+        }
+        .img-lianhua {
+            background: linear-gradient(135deg, #1e5b7b, #2e86ab);
+        }
+        .img-baren {
+            background: linear-gradient(135deg, #8b4513, #a0522d);
+        }
+        .img-wufeng {
+            background: linear-gradient(135deg, #2d5a27, #3d7a33);
+        }
+        .img-fenghuang {
+            background: linear-gradient(135deg, #6b3a5b, #8b5a7d);
+        }
+
+        .attraction-info {
+            padding: 25px 20px;
+        }
+
+        .attraction-info h3 {
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .attraction-info .tag {
+            display: inline-block;
+            padding: 3px 12px;
+            background: rgba(196, 30, 58, 0.1);
+            color: var(--red);
+            font-size: 12px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .attraction-info p {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* ========== 美食 ========== */
+        .cuisine {
+            background: var(--white);
+        }
+
+        .cuisine-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .cuisine-card {
+            text-align: center;
+            padding: 35px 20px;
+            border-radius: 16px;
+            background: var(--cream);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .cuisine-card:hover {
+            background: #fff5e6;
+            transform: scale(1.05);
+        }
+
+        .cuisine-emoji {
+            font-size: 50px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .cuisine-card h4 {
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .cuisine-card p {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* ========== 名人 ========== */
+        .famous {
+            background: linear-gradient(135deg, #f5f0e8, #fff8f0);
+        }
+
+        .famous-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .famous-card {
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 16px;
+            background: var(--white);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s ease;
+        }
+
+        .famous-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .famous-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            background: linear-gradient(135deg, #1a1a2e, #302b63);
+            color: var(--white);
+        }
+
+        .famous-card h4 {
+            font-size: 18px;
+            letter-spacing: 2px;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .famous-card .era {
+            font-size: 12px;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .famous-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ========== 页脚 ========== */
+        .footer {
+            background: #1a1a2e;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            padding: 50px 40px 30px;
+        }
+
+        .footer-title {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
+        .footer-line {
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+            margin: 0 auto 20px;
+        }
+
+        .footer p {
+            font-size: 13px;
+            letter-spacing: 1px;
+            line-height: 2;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 1024px) {
+            .about-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .attractions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .cuisine-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .famous-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-title {
+                font-size: 50px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .about-grid,
+            .attractions-grid,
+            .cuisine-grid,
+            .famous-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-title {
+                font-size: 36px;
+                letter-spacing: 4px;
+            }
+            .hero-subtitle {
+                font-size: 16px;
+                letter-spacing: 3px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .section {
+                padding: 60px 20px;
+            }
+            .section-title {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== 导航栏 ==================== -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">达<span>州</span></div>
+        <ul class="nav-links">
+            <li><a href="#about">关于达州</a></li>
+            <li><a href="#attractions">名胜景点</a></li>
+            <li><a href="#cuisine">特色美食</a></li>
+            <li><a href="#famous">名人故里</a></li>
+        </ul>
+    </nav>
+
+    <!-- ==================== 主视觉 ==================== -->
+    <section class="hero" id="home">
+        <div class="particles" id="particles"></div>
+        <div class="mountains">
+            <div class="mountain mountain-1"></div>
+            <div class="mountain mountain-2"></div>
+            <div class="mountain mountain-3"></div>
+            <div class="mountain mountain-4"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">📍 中国 · 四川</div>
+            <h1 class="hero-title">达 州</h1>
+            <p class="hero-subtitle">巴人故里 · 中国气都</p>
+            <p class="hero-desc">
+                达州，古称"通州"，位于四川东北部，大巴山南麓。<br>
+                这里是巴文化的发祥地，也是川陕革命老区，<br>
+                自然风光壮美，人文底蕴深厚。
+            </p>
+            <a href="#about" class="hero-btn">探 索 达 州</a>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <!-- ==================== 关于达州 ==================== -->
+    <section class="section about" id="about">
+        <h2 class="section-title">走进达州</h2>
+        <div class="section-line"></div>
+        <p class="section-subtitle">一座有山有水、有历史有故事的城市</p>
+        <div class="about-grid">
+            <div class="about-card">
+                <span class="about-icon">🏔️</span>
+                <h3>山水之城</h3>
+                <p>达州地处大巴山南麓，渠江穿城而过，山川秀美，拥有巴山大峡谷、五峰山等国家级自然景区，是川东北的生态屏障。</p>
+            </div>
+            <div class="about-card">
+                <span class="about-icon">🏛️</span>
+                <h3>巴人故里</h3>
+                <p>达州是古代巴文化的发源地，罗家坝遗址距今约4000年，被誉为"巴文化活化石"，见证了巴人璀璨的古代文明。</p>
+            </div>
+            <div class="about-card">
+                <span class="about-icon">⛽</span>
+                <h3>中国气都</h3>
+                <p>达州拥有全国最大的天然气田之一——普光气田，天然气储量丰富，是国家重要的能源化工基地。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 数字达州 ==================== -->
+    <div class="stats">
+        <div class="stats-grid">
+            <div>
+                <div class="stat-number">1900+</div>
+                <div class="stat-label">建城历史（年）</div>
+            </div>
+            <div>
+                <div class="stat-number">540万</div>
+                <div class="stat-label">常住人口</div>
+            </div>
+            <div>
+                <div class="stat-number">1.66万</div>
+                <div class="stat-label">面积（平方公里）</div>
+            </div>
+            <div>
+                <div class="stat-number">4A+</div>
+                <div class="stat-label">国家级景区</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 名胜景点 ==================== -->
+    <section class="section attractions" id="attractions">
+        <h2 class="section-title">名胜景点</h2>
+        <div class="section-line"></div>
+        <p class="section-subtitle">游山水达州，品巴山蜀水</p>
+        <div class="attractions-grid">
+            <div class="attraction-card">
+                <div class="attraction-img img-bashan">🏞️</div>
+                <div class="attraction-info">
+                    <h3>巴山大峡谷</h3>
+                    <span class="tag">国家AAAA级</span>
+                    <p>大巴山深处的天然画廊，峡谷幽深、瀑布飞泻，被誉为"川东小九寨"，是徒步与摄影的天堂。</p>
+                </div>
+            </div>
+            <div class="attraction-card">
+                <div class="attraction-img img-zhenfo">🛕</div>
+                <div class="attraction-info">
+                    <h3>真佛山</h3>
+                    <span class="tag">国家AAAA级</span>
+                    <p>川东佛教圣地，集佛教、儒教、道教三教合一，古刹庄严，香火鼎盛，是国家重点文物保护单位。</p>
+                </div>
+            </div>
+            <div class="attraction-card">
+                <div class="attraction-img img-lianhua">🌊</div>
+                <div class="attraction-info">
+                    <h3>莲花湖</h3>
+                    <span class="tag">城市湿地公园</span>
+                    <p>达州市区的生态明珠，湖光山色相映成趣，春夏荷花盛开，是市民休闲娱乐的好去处。</p>
+                </div>
+            </div>
+            <div class="attraction-card">
+                <div class="attraction-img img-baren">🗿</div>
+                <div class="attraction-info">
+                    <h3>罗家坝遗址</h3>
+                    <span class="tag">全国重点文保</span>
+                    <p>距今约4000年的巴文化遗址，出土了大量青铜器、陶器，是探索古代巴国历史的重要窗口。</p>
+                </div>
+            </div>
+            <div class="attraction-card">
+                <div class="attraction-img img-wufeng">🎋</div>
+                <div class="attraction-info">
+                    <h3>五峰山</h3>
+                    <span class="tag">国家森林公园</span>
+                    <p>万亩竹林覆盖，空气清新，四季常绿，是国家森林公园，被誉为"川东竹海"。</p>
+                </div>
+            </div>
+            <div class="attraction-card">
+                <div class="attraction-img img-fenghuang">⛰️</div>
+                <div class="attraction-info">
+                    <h3>凤凰山</h3>
+                    <span class="tag">城市地标</span>
+                    <p>达州市区的标志性山峰，登顶可俯瞰全城风光，山上有红军亭，是缅怀革命先辈的好去处。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 特色美食 ==================== -->
+    <section class="section cuisine" id="cuisine">
+        <h2 class="section-title">特色美食</h2>
+        <div class="section-line"></div>
+        <p class="section-subtitle">麻辣鲜香，舌尖上的达州</p>
+        <div class="cuisine-grid">
+            <div class="cuisine-card">
+                <span class="cuisine-emoji">🍲</span>
+                <h4>灯影牛肉</h4>
+                <p>达州名片级美食，薄如纸、透如灯，麻辣香甜</p>
+            </div>
+            <div class="cuisine-card">
+                <span class="cuisine-emoji">🥘</span>
+                <h4>石锅鱼</h4>
+                <p>鲜嫩鱼肉配特制麻辣锅底，热气腾腾，回味无穷</p>
+            </div>
+            <div class="cuisine-card">
+                <span class="cuisine-emoji">🍜</span>
+                <h4>徐鸭子</h4>
+                <p>达州大竹名菜，百年传承，肉质酥烂，入口即化</p>
+            </div>
+            <div class="cuisine-card">
+                <span class="cuisine-emoji">🧆</span>
+                <h4>大风羊肉</h4>
+                <p>选用大巴山放养山羊，肉质鲜美，是冬季滋补佳品</p>
+            </div>
+            <div class="cuisine-card">
+                <span class="cuisine-emoji">🍢</span>
+                <h4>达州烧烤</h4>
+                <p>夜宵灵魂，巴山风味烤串，烟火气十足</p>
+            </div>
+            <div class="cuisine-card">
+                <span class="cuisine-emoji">🥟</span>
+                <h4>七星椒抄手</h4>
+                <p>皮薄馅大，红油飘香，是达州人日常的味觉记忆</p>
+            </div>
+            <div class="cuisine-card">
+                <span class="cuisine-emoji">🌶️</span>
+                <h4>巴山泡菜</h4>
+                <p>用大巴山泉水泡制，酸辣爽脆，开胃解腻</p>
+            </div>
+            <div class="cuisine-card">
+                <span class="cuisine-emoji">🍵</span>
+                <h4>巴山雀舌</h4>
+                <p>达州特产名茶，形如雀舌，清香甘醇，远销海外</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 名人故里 ==================== -->
+    <section class="section famous" id="famous">
+        <h2 class="section-title">名人故里</h2>
+        <div class="section-line"></div>
+        <p class="section-subtitle">地灵人杰，英才辈出</p>
+        <div class="famous-grid">
+            <div class="famous-card">
+                <div class="famous-avatar">📜</div>
+                <h4>张思德</h4>
+                <div class="era">1915 — 1944</div>
+                <p>全心全意为人民服务的典范，达州仪陇人（今属南充），其精神影响了一代又一代中国人。</p>
+            </div>
+            <div class="famous-card">
+                <div class="famous-avatar">⚔️</div>
+                <h4>王维舟</h4>
+                <div class="era">1887 — 1970</div>
+                <p>川东游击军创始人，达州宣汉人，为中国革命事业做出了卓越贡献。</p>
+            </div>
+            <div class="famous-card">
+                <div class="famous-avatar">🏛️</div>
+                <h4>李先念</h4>
+                <div class="era">1909 — 1992</div>
+                <p>曾在达州指挥川陕革命根据地斗争，后任中华人民共和国主席。</p>
+            </div>
+            <div class="famous-card">
+                <div class="famous-avatar">✍️</div>
+                <h4>梁上泉</h4>
+                <div class="era">1931 —</div>
+                <p>达州籍著名诗人、作家，代表作《小白杨》传唱大江南北，影响深远。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 页脚 ==================== -->
+    <footer class="footer">
+        <div class="footer-title">大美达州</div>
+        <div class="footer-line"></div>
+        <p>
+            巴人故里 · 中国气都 · 山水之城<br>
+            达州，一座值得你来的城市
+        </p>
+        <p style="margin-top: 20px; font-size: 11px; color: rgba(255,255,255,0.3);">
+            本页面仅用于宣传展示，部分资料来源于公开信息
+        </p>
+    </footer>
+
+    <script>
+        // ========== 导航栏滚动效果 ==========
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ========== 粒子效果 ==========
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particle.style.animationDuration = (2 + Math.random() * 4) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // ========== 滚动渐显动画 ==========
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.about-card, .attraction-card, .cuisine-card, .famous-card, .stat-number').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
